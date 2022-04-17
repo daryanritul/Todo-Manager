@@ -1,0 +1,28 @@
+.auth {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content {
+  width: 50rem;
+  height: 50rem;
+}
+.logo {
+  color: #1b98f5;
+  text-align: center;
+  font-weight: bold;
+  font-size: 3rem;
+  padding: 0px;
+  margin: 0px;
+  margin: 10px;
+}
+.logo span {
+  color: #000;
+}
+.subtext {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
