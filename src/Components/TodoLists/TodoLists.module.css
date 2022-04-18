@@ -22,3 +22,7 @@
   height: 90%;
   overflow-y: auto;
 }
+.toggle {
+  background: red;
+  color: red;
+}

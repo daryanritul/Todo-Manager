@@ -1,0 +1,84 @@
+.modal {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  background: rgba(49, 49, 49, 0.306);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  width: 60%;
+  background: #fff;
+  border-radius: 5px;
+}
+.inputBox {
+  padding: 1rem;
+}
+.title {
+  border: none;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1b98f5;
+  width: 100%;
+}
+.label {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: grey;
+}
+.title:focus,
+.date:focus {
+  outline: none;
+}
+.inputBox textarea {
+  border: none;
+  background: rgb(220, 220, 220);
+  width: 100%;
+  height: 15rem;
+}
+.dueDates {
+  display: flex;
+  flex-direction: column;
+}
+.dueDates > * {
+  width: 40%;
+  border: none;
+  margin: 0.5rem;
+}
+.noDate {
+  padding: 1rem;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.noDate:hover {
+  background: #1b98f5;
+}
+.active {
+  background: #1b98f5;
+}
+.buttonBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 2rem;
+}
+.btn {
+  background: #fff;
+  border: 0.2rem solid #1b98f5;
+  color: #1b98f5;
+  padding: 1rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: ease 0.2s;
+  width: 20rem;
+}
+.btn:hover {
+  background: #1b97f5;
+  color: #000;
+}
