@@ -59,7 +59,7 @@ const Auth = () => {
   return (
     <div className={sty.auth}>
       <div className={`${sty.content} card`}>
-        {!isLoading && (
+        {isLoading && (
           <div className={sty.spinnerBox}>
             <Spinner />
           </div>

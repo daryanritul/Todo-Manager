@@ -1,4 +1,35 @@
 .body {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.todos {
+  width: 80%;
+}
+.activity {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.todoHead {
+  height: 8%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+.workTitle {
+  font-weight: bold;
+  margin-left: 2rem;
+}
+
+/* ToDos BOdy */
+
+.todoBody {
+  height: 92%;
+  display: flex;
+  flex-direction: row;
 }
