@@ -14,12 +14,24 @@ import {
   ADD_TODO_OVERDUE,
   ADD_TODO_IN_PROGRESS,
   ADD_TODO_PENDING,
+  SET_IS_LOADING,
 } from '../UserContext/actions.type';
 import { db } from './config';
 
-export const addTodo = async data => {
-  const { uid, activeWorkSpaceId, title, id, description, status, dueDate } =
-    data;
+export const addTodo = async (data) => {
+  const {
+    uid,
+    activeWorkSpaceId,
+    title,
+    id,
+    description,
+    status,
+    dueDate,
+    dispatch,
+  } = data;
+
+  dispatch({ type: SET_IS_LOADING, payload: true });
+  console.log('HEEE');
   let todoRef = null;
   if (id == null) {
     todoRef = await addDoc(
@@ -37,6 +49,7 @@ export const addTodo = async data => {
       id: todoRef.id,
     }).then(() => {
       console.log('Document Writtes with ID: ', todoRef.id);
+      dispatch({ type: SET_IS_LOADING, payload: false });
     });
   } else {
     todoRef = doc(
@@ -56,6 +69,7 @@ export const addTodo = async data => {
       createdAt: Timestamp.now(),
     }).then(() => {
       console.log('Document UPDATE with ID: ', todoRef.id);
+      dispatch({ type: SET_IS_LOADING, payload: false });
     });
   }
 };
@@ -69,7 +83,7 @@ export const getTodoPending = async ({ uid, activeWorkSpaceId, dispatch }) => {
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     temptodos.push(doc.data());
   });
 
@@ -88,7 +102,7 @@ export const getTodoInProgress = async ({
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     temptodos.push(doc.data());
   });
 
@@ -107,7 +121,7 @@ export const getTodoCompleted = async ({
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     temptodos.push(doc.data());
   });
 
@@ -122,7 +136,7 @@ export const getTodoOverdue = async ({ uid, activeWorkSpaceId, dispatch }) => {
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     temptodos.push(doc.data());
   });
 

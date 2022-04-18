@@ -13,7 +13,7 @@ const initialState = {
   todos: {
     pending: [],
     inProgress: [],
-    isCompletd: [],
+    isCompleted: [],
     overdue: [],
   },
   isLoading: false,

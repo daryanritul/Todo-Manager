@@ -34,7 +34,7 @@ export default (state, action) => {
     case ADD_TODO_COMPLETED:
       return {
         ...state,
-        todos: { ...state.todos, isCompletd: action.payload },
+        todos: { ...state.todos, isCompleted: action.payload },
       };
     case ADD_TODO_OVERDUE:
       return { ...state, todos: { ...state.todos, overdue: action.payload } };

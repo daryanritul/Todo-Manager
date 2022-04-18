@@ -17,8 +17,7 @@ const Todo = ({ todo }) => {
       ? 'green'
       : 'red';
 
-  const setToggle = status => {
-    console.log('Dome', status);
+  const setToggle = (status) => {
     setToogleTodo(status);
   };
   return (

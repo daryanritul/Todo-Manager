@@ -17,12 +17,12 @@ const Body = () => {
   const { state, dispatch } = useContext(userContext);
   const [toogleTodo, setToogleTodo] = useState(false);
 
-  const setToggle = status => {
+  const setToggle = (status) => {
     setToogleTodo(status);
   };
 
   useEffect(() => {
-    if (state.user.uid && state.activeWorkspace) {
+    if (state.user.uid && state.activeWorkspace && state.isLoading == false) {
       getTodoPending({
         uid: state.user.uid,
         activeWorkSpaceId: state.activeWorkspace[0],
@@ -44,8 +44,8 @@ const Body = () => {
         dispatch,
       });
     }
-  }, [state.user.uid, state.activeWorkspace]);
-  console.log(state.todos);
+  }, [state.user.uid, state.activeWorkspace, state.isLoading]);
+  console.log('state.isLoading', state.isLoading);
   return (
     <div className={sty.body}>
       <div className={sty.todos}>
@@ -63,7 +63,7 @@ const Body = () => {
         <div className={sty.todoBody}>
           <TodoLists title="Pending" data={state.todos.pending} />
           <TodoLists title="In Progress" data={state.todos.inProgress} />
-          <TodoLists title="Completed" data={state.todos.isCompletd} />
+          <TodoLists title="Completed" data={state.todos.isCompleted} />
           <TodoLists title="Overdue" data={state.todos.overdue} />
         </div>
       </div>

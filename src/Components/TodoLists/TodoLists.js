@@ -9,7 +9,7 @@ const TodoLists = ({ title, data }) => {
     <div className={sty.todoList}>
       <div className={sty.listHead}>
         <div className={sty.title}>{title}</div>
-        <div className={sty.title}>{todos.length}</div>
+        <div className={sty.title}>{todos ? todos.length : 0}</div>
       </div>
       {todos && (
         <div className={sty.listBody}>
