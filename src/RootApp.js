@@ -10,8 +10,14 @@ const initialState = {
   },
   isSignedIn: false,
   workspace: [],
-  todo: [],
+  todos: {
+    pending: [],
+    inProgress: [],
+    isCompletd: [],
+    overdue: [],
+  },
   isLoading: false,
+  activeWorkspace: null,
 };
 export default function RootApp() {
   const [state, dispatch] = useReducer(reducer, initialState);

@@ -14,21 +14,18 @@ function App() {
     dispatch({ type: SET_IS_LOADING, payload: true });
     const susbcriber = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log('User', user);
         dispatch({
           type: SET_USER,
           payload: { email: user.email, uid: user.uid },
         });
         dispatch({ type: SET_IS_LOADING, payload: false });
       } else {
-        console.log('USer Sign Out');
         dispatch({ type: SET_IS_LOADING, payload: false });
       }
     });
     return susbcriber;
   }, []);
 
-  console.log('globalState', state.user);
   return (
     <BrowserRouter>
       <Routes>

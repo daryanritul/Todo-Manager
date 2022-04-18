@@ -3,7 +3,7 @@ import Todo from '../Todo/Todo';
 
 import sty from './TodoLists.module.css';
 
-const TodoLists = ({ title }) => {
+const TodoLists = ({ title, todoList }) => {
   const dummyTodo = [
     {
       title: 'Create Wireframe',
@@ -23,6 +23,7 @@ const TodoLists = ({ title }) => {
       dueDate: '2022-04-06',
     },
   ];
+
   return (
     <div className={sty.todoList}>
       <div className={sty.listHead}>
@@ -30,9 +31,9 @@ const TodoLists = ({ title }) => {
         <div className={sty.title}>10</div>
       </div>
       <div className={sty.listBody}>
-        {dummyTodo.map((todo, index) => (
-          <Todo key={index} todo={todo} />
-        ))}
+        {dummyTodo.length == 0
+          ? null
+          : dummyTodo.map((todo, index) => <Todo key={index} todo={todo} />)}
       </div>
     </div>
   );

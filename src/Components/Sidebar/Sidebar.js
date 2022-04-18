@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { addWorkspace } from '../../fireabse/workspace';
+import { SET_ACTIVE_WORKSPACE } from '../../UserContext/actions.type';
 import { userContext } from '../../UserContext/store';
 import sty from './Sidebar.module.css';
 
@@ -31,7 +32,13 @@ TODO:
             className={`${sty.workitem} ${
               workspace === selectedItem ? sty.active : ''
             }`}
-            onClick={() => setSelectedItem(workspace)}
+            onClick={() => {
+              setSelectedItem(workspace);
+              dispatch({
+                type: SET_ACTIVE_WORKSPACE,
+                payload: [index, workspace],
+              });
+            }}
           >
             {workspace}
           </div>
