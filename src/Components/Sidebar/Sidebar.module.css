@@ -1,5 +1,46 @@
 .sidebar {
-  background: rgb(99, 99, 99);
+  background: #1b98f5;
   width: 100%;
   height: 100%;
+}
+.title {
+  color: #fff;
+  text-align: center;
+}
+.worklist {
+  background: #157ccb;
+  height: 85%;
+  margin: 1rem;
+  margin-top: 0rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.workitem {
+  transition: ease-in-out 0.2s;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+.workitem.active {
+  background: #fff;
+}
+.workitem:hover {
+  background: #fff;
+}
+.buttonBox {
+  height: 7%;
+  margin: 0 1rem;
+}
+.button {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+.input {
+  padding: 0 1rem;
 }

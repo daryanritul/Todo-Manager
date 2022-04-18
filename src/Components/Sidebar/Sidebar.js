@@ -1,9 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import styles from './Sidebar.module.css';
+import sty from './Sidebar.module.css';
 
 const Sidebar = () => {
-  return <div className={styles.sidebar}>Sidebar</div>;
+  const [dummy, setDummy] = useState(['My ToDos']);
+  const [selectedItem, setSelectedItem] = useState('My ToDos'); //defaul selected Item is Always ONE
+  const [item, setItem] = useState({
+    value: '',
+    status: false,
+  });
+
+  /* 
+TODO:
+
+ replace Dummy data and Import Workspace list from firebase
+  Push New Workspace to Firebase
+  Check State for input and Selected Item are OK or NOT, 
+  use uuid indead of key in list of workspace
+*/
+
+  return (
+    <div className={sty.sidebar}>
+      <p className={sty.title}>My Workspaces</p>
+      <div className={sty.worklist}>
+        {dummy.map((workspace, index) => (
+          <div
+            key={index}
+            className={`${sty.workitem} ${
+              workspace === selectedItem ? sty.active : ''
+            }`}
+            onClick={() => setSelectedItem(workspace)}
+          >
+            {workspace}
+          </div>
+        ))}
+      </div>
+      <div className={sty.buttonBox}>
+        {!item.status ? (
+          <button
+            className={sty.button}
+            onClick={() => {
+              setItem({
+                ...item,
+                status: true,
+              });
+            }}
+          >
+            Add new Workspace
+          </button>
+        ) : (
+          <input
+            type={'text'}
+            className={`${sty.button} ${sty.input}`}
+            onChange={event =>
+              setItem({
+                ...item,
+                value: event.target.value,
+              })
+            }
+            value={item.value}
+            placeholder={'Enter Workspace Name'}
+            onKeyDown={event => {
+              if (event.key === 'Enter') {
+                if (item.value !== '') {
+                  setDummy([...dummy, item.value]);
+                }
+                setItem({
+                  value: '',
+                  status: false,
+                });
+              }
+            }}
+          />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Sidebar;

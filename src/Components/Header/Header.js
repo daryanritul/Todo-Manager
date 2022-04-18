@@ -1,11 +1,23 @@
 import React from 'react';
 
-import styles from './Header.module.css';
+import sty from './Header.module.css';
+
+/*
+TODO:
+    Display Email from Firebase
+    create Sign Out Function:
+*/
 
 const Header = () => {
   return (
-    <div className={styles.header}>
-      <div className={styles.text}>Header</div>
+    <div className={sty.header}>
+      <div className={sty.logo}>
+        ToDo<span> Manager</span>
+      </div>
+      <div className={sty.user}>
+        <div className={sty.email}>daryanritul@gmail.com</div>
+        <button className={sty.button}>Sign Out</button>
+      </div>
     </div>
   );
 };
