@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-
+import React, { useState, useContext } from 'react';
+import { addWorkspace } from '../../fireabse/workspace';
+import { userContext } from '../../UserContext/store';
 import sty from './Sidebar.module.css';
 
 const Sidebar = () => {
+  const { state, dispatch } = useContext(userContext);
   const [dummy, setDummy] = useState(['My ToDos']);
   const [selectedItem, setSelectedItem] = useState('My ToDos'); //defaul selected Item is Always ONE
   const [item, setItem] = useState({
@@ -23,7 +25,7 @@ TODO:
     <div className={sty.sidebar}>
       <p className={sty.title}>My Workspaces</p>
       <div className={sty.worklist}>
-        {dummy.map((workspace, index) => (
+        {state.workspace.map(([index, workspace]) => (
           <div
             key={index}
             className={`${sty.workitem} ${
@@ -52,7 +54,7 @@ TODO:
           <input
             type={'text'}
             className={`${sty.button} ${sty.input}`}
-            onChange={event =>
+            onChange={(event) =>
               setItem({
                 ...item,
                 value: event.target.value,
@@ -60,10 +62,10 @@ TODO:
             }
             value={item.value}
             placeholder={'Enter Workspace Name'}
-            onKeyDown={event => {
+            onKeyDown={(event) => {
               if (event.key === 'Enter') {
                 if (item.value !== '') {
-                  setDummy([...dummy, item.value]);
+                  addWorkspace(item.value, state.user.uid, dispatch);
                 }
                 setItem({
                   value: '',
