@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import Spinner from "../../Components/Spinner/Spinner";
+import React, { useState } from 'react';
+import Spinner from '../../Components/Spinner/Spinner';
+import { fireSignIn, fireSignUp } from '../../fireabse/auth';
 
-import sty from "./Auth.module.css";
+import sty from './Auth.module.css';
 
 // TODO: Form Validations + States for Email password and Errors
 // Function of Login and Create new Account
@@ -9,16 +10,17 @@ import sty from "./Auth.module.css";
 // Clear and refresh errors when submit forms.
 
 const Auth = () => {
-  const [isLoading, setIsLoading] = useState(!false);
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState({
-    value: "",
-    err: "",
+    value: '',
+    err: '',
   });
   const [password, setPassword] = useState({
-    value: "",
-    err: "",
+    value: '',
+    err: '',
   });
 
+  const [fireError, setFireError] = useState(null);
   const validateEmail = (em) => {
     return String(em)
       .toLowerCase()
@@ -28,32 +30,46 @@ const Auth = () => {
   };
 
   const checkLogin = () => {
+    setIsLoading(true);
     if (!email.value) {
-      setEmail({ ...email, err: "Email field cant be empty" });
+      setEmail({ ...email, err: 'Email field cant be empty' });
       return;
     }
 
     if (!validateEmail(email.value)) {
-      setEmail({ ...email, err: "Please Enter a vailed email address" });
+      setEmail({ ...email, err: 'Please Enter a vailed email address' });
     }
 
     if (password.value.length <= 8) {
-      setPassword({ ...password, err: "Password length should be > 8" });
+      setPassword({ ...password, err: 'Password length should be > 8' });
     }
+
+    if (email.err === '' && password.err === '') {
+      fireSignIn(email.value, password.value, setFireError);
+    }
+    setIsLoading(false);
   };
+
+  console.log('FireError', fireError);
   const checkSignup = () => {
+    setIsLoading(true);
     if (!email.value) {
-      setEmail({ ...email, err: "Email field cant be empty" });
+      setEmail({ ...email, err: 'Email field cant be empty' });
       return;
     }
 
     if (!validateEmail(email.value)) {
-      setEmail({ ...email, err: "Please Enter a vailed email address" });
+      setEmail({ ...email, err: 'Please Enter a vailed email address' });
     }
 
     if (password.value.length <= 8) {
-      setPassword({ ...password, err: "Password length should be > 8" });
+      setPassword({ ...password, err: 'Password length should be > 8' });
     }
+
+    if (email.err === '' && password.err === '') {
+      fireSignUp(email.value, password.value, setFireError);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -74,15 +90,15 @@ const Auth = () => {
           <div className={sty.input}>
             <div className={sty.inputlabel}>Email</div>
             <input
-              type={"email"}
+              type={'email'}
               onChange={(e) => {
                 setEmail({
                   ...email,
                   value: e.target.value,
-                  err: "",
+                  err: '',
                 });
               }}
-              placeholder={"Enter Email Address"}
+              placeholder={'Enter Email Address'}
               className={sty.inputField}
             />
             <div className={sty.error}>{email.err}</div>
@@ -90,22 +106,25 @@ const Auth = () => {
           <div className={sty.input}>
             <div className={sty.inputlabel}>Password</div>
             <input
-              type={"password"}
-              placeholder={"Enter Password"}
+              type={'password'}
+              placeholder={'Enter Password'}
               className={sty.inputField}
               onChange={(e) => {
                 setPassword({
                   ...password,
                   value: e.target.value,
-                  err: "",
+                  err: '',
                 });
               }}
             />
             <div className={sty.error}>{password.err}</div>
           </div>
-          <div className={`${sty.error} ${sty.center}`}>
-            Firebase Errors Here
-          </div>
+          {fireError == null ? (
+            <></>
+          ) : (
+            <div className={`${sty.error} ${sty.center}`}>{fireError}</div>
+          )}
+
           <div className={sty.buttonBox}>
             <button className={sty.btn} onClick={checkLogin}>
               Login

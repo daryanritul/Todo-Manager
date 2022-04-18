@@ -1,4 +1,5 @@
 import React from 'react';
+import { fireSignOut } from '../../fireabse/auth';
 
 import sty from './Header.module.css';
 
@@ -16,7 +17,9 @@ const Header = () => {
       </div>
       <div className={sty.user}>
         <div className={sty.email}>daryanritul@gmail.com</div>
-        <button className={sty.button}>Sign Out</button>
+        <button className={sty.button} onClick={fireSignOut}>
+          Sign Out
+        </button>
       </div>
     </div>
   );
