@@ -17,7 +17,7 @@ import {
 } from '../UserContext/actions.type';
 import { db } from './config';
 
-export const addTodo = async (data) => {
+export const addTodo = async data => {
   const { uid, activeWorkSpaceId, title, id, description, status, dueDate } =
     data;
   let todoRef = null;
@@ -69,8 +69,8 @@ export const getTodoPending = async ({ uid, activeWorkSpaceId, dispatch }) => {
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];
-  querySnapshot.forEach((doc) => {
-    temptodos.push([doc.data()]);
+  querySnapshot.forEach(doc => {
+    temptodos.push(doc.data());
   });
 
   dispatch({ type: ADD_TODO_PENDING, payload: { data: temptodos } });
@@ -88,7 +88,7 @@ export const getTodoInProgress = async ({
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];
-  querySnapshot.forEach((doc) => {
+  querySnapshot.forEach(doc => {
     temptodos.push(doc.data());
   });
 
@@ -107,7 +107,7 @@ export const getTodoCompleted = async ({
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];
-  querySnapshot.forEach((doc) => {
+  querySnapshot.forEach(doc => {
     temptodos.push(doc.data());
   });
 
@@ -122,7 +122,7 @@ export const getTodoOverdue = async ({ uid, activeWorkSpaceId, dispatch }) => {
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];
-  querySnapshot.forEach((doc) => {
+  querySnapshot.forEach(doc => {
     temptodos.push(doc.data());
   });
 

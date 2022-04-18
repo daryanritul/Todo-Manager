@@ -17,7 +17,7 @@ const Body = () => {
   const { state, dispatch } = useContext(userContext);
   const [toogleTodo, setToogleTodo] = useState(false);
 
-  const setToggle = (status) => {
+  const setToggle = status => {
     setToogleTodo(status);
   };
 
@@ -45,8 +45,7 @@ const Body = () => {
       });
     }
   }, [state.user.uid, state.activeWorkspace]);
-
-  console.log('TODO', state.todos);
+  console.log(state.todos);
   return (
     <div className={sty.body}>
       <div className={sty.todos}>
@@ -62,10 +61,10 @@ const Body = () => {
           <ProgressBar percentage={'40%'} />
         </div>
         <div className={sty.todoBody}>
-          <TodoLists title="Pending" />
-          <TodoLists title="In Progress" />
-          <TodoLists title="Completed" />
-          <TodoLists title="Overdue" />
+          <TodoLists title="Pending" data={state.todos.pending} />
+          <TodoLists title="In Progress" data={state.todos.inProgress} />
+          <TodoLists title="Completed" data={state.todos.isCompletd} />
+          <TodoLists title="Overdue" data={state.todos.overdue} />
         </div>
       </div>
       <div className={sty.activity}>
