@@ -1,0 +1,20 @@
+.bar {
+  display: flex;
+  flex-direction: row;
+}
+.bar p {
+  font-size: 1.4rem;
+}
+.barHolder {
+  width: 50rem;
+  background: rgb(212, 212, 212);
+  height: 2rem;
+  margin: 0 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.barLen {
+  background: #1b98f5;
+  height: 100%;
+  transition: width ease-in 0.4s;
+}

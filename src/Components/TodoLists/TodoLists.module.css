@@ -1,0 +1,24 @@
+.todoList {
+  width: 100%;
+  margin: 1rem;
+  background: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+}
+.listHead {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid #1b98f5;
+  margin: 0.5rem 1rem;
+}
+.title {
+  color: #1b98f5;
+  font-weight: bold;
+  padding: 0.5rem;
+}
+.listBody {
+  overflow: hidden;
+  height: 90%;
+  overflow-y: auto;
+}

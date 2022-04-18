@@ -1,0 +1,67 @@
+.todo {
+  background: #f3f3f3;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  transition: ease 0.2s;
+  cursor: pointer;
+}
+.todo:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.todoHead {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.4rem;
+  margin: 0 0.5rem;
+}
+.title {
+  font-weight: bold;
+  padding: 5px;
+}
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border-radius: 5px;
+  transition: background ease 0.2s;
+}
+.icons:hover {
+  background: rgba(255, 0, 0, 0.146);
+}
+.icons img {
+  width: 1.3rem;
+}
+.desc {
+  font-size: 1.4rem;
+  margin: 0 1rem;
+  line-height: 1.5rem;
+  text-align: left;
+  color: grey;
+}
+.todoFoot {
+  display: flex;
+  font-size: 1.2rem;
+  width: 100%;
+  justify-content: space-between;
+}
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.text {
+  text-transform: capitalize;
+}
+.statusDot {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 2rem;
+  background: tomato;
+  margin: 5px;
+}
+.date {
+  color: grey;
+  padding: 5px;
+}
