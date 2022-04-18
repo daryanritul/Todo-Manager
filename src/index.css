@@ -16,6 +16,10 @@ body {
   margin: 0;
   background: #f2f3f4;
 }
+input,
+button {
+  font-family: 'Nunito Sans', sans-serif;
+}
 h1,
 h2,
 h3,

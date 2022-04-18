@@ -4,8 +4,8 @@ import Home from './Screens/Home/Home';
 function App() {
   return (
     <>
-      {/* <Auth /> */}
-      <Home />
+      <Auth />
+      {/* <Home /> */}
     </>
   );
 }
