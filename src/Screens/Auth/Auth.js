@@ -8,6 +8,7 @@ import sty from './Auth.module.css';
 // Function of Login and Create new Account
 // IsLaoding  when submit form
 // Clear and refresh errors when submit forms.
+// Clear and refresh errors when submit forms.
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
