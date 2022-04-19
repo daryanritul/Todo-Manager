@@ -13,13 +13,13 @@ const Todo = ({ todo }) => {
   const dotColor =
     todo.status === 'pending'
       ? 'tomato'
-      : todo.status === 'inProgress'
+      : todo.status === 'progress'
       ? 'yellow'
-      : todo.status === 'isCompleted'
+      : todo.status === 'completed'
       ? 'green'
       : 'red';
 
-  const setToggle = status => {
+  const setToggle = (status) => {
     setToogleTodo(status);
   };
 
@@ -31,8 +31,9 @@ const Todo = ({ todo }) => {
       description: todo.description,
       dueDate: todo.dueDate,
       status: todo.status,
+      workSpaceId: todo.workSpaceId,
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));

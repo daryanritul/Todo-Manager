@@ -16,7 +16,7 @@ const TodoModal = ({ todo, setToggle }) => {
       description: description,
       status: todo ? todo.status : 'pending',
       dueDate: dueDate ? dueDate : false,
-      activeWorkSpaceId: state.activeWorkspace[0],
+      workSpaceId: state.activeWorkspace[0],
       dispatch,
     });
     setToggle(false);
@@ -29,7 +29,7 @@ const TodoModal = ({ todo, setToggle }) => {
           <p className={sty.label}>Todo Title</p>
           <input
             value={title}
-            onChange={event => setTitle(event.target.value)}
+            onChange={(event) => setTitle(event.target.value)}
             placeholder="Enter Todo Titile Here"
             className={sty.title}
           />
@@ -38,7 +38,7 @@ const TodoModal = ({ todo, setToggle }) => {
           <p className={sty.label}>Todo Description</p>
           <textarea
             value={description}
-            onChange={event => setDescription(event.target.value)}
+            onChange={(event) => setDescription(event.target.value)}
             placeholder="Enter Todo Titile Here"
           />
         </div>
@@ -52,7 +52,7 @@ const TodoModal = ({ todo, setToggle }) => {
                 type="date"
                 className={sty.date}
                 value={dueDate}
-                onChange={event => setDueDate(event.target.value)}
+                onChange={(event) => setDueDate(event.target.value)}
               />
             )}
             <button

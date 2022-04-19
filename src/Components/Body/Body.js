@@ -6,47 +6,53 @@ import TodoModal from '../TodoModal/TodoModal';
 import { userContext } from '../../UserContext/store';
 
 import sty from './Body.module.css';
-import {
-  getTodoInProgress,
-  getTodoPending,
-  getTodoOverdue,
-  getTodoCompleted,
-} from '../../fireabse/todo';
+import { getTodos } from '../../fireabse/todo';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { getActivity } from '../../fireabse/activity';
 
 const Body = () => {
   const { state, dispatch } = useContext(userContext);
   const [toogleTodo, setToogleTodo] = useState(false);
 
-  const setToggle = status => {
+  const setToggle = (status) => {
     setToogleTodo(status);
   };
 
   useEffect(() => {
-    if (state.user.uid && state.activeWorkspace && state.isLoading == false) {
-      getTodoPending({
+    if (state.user.uid && state.activeWorkspace) {
+      getTodos({
         uid: state.user.uid,
-        activeWorkSpaceId: state.activeWorkspace[0],
+        workSpaceId: state.activeWorkspace[0],
         dispatch,
+        status: 'pending',
       });
-      getTodoCompleted({
+      getTodos({
         uid: state.user.uid,
-        activeWorkSpaceId: state.activeWorkspace[0],
+        workSpaceId: state.activeWorkspace[0],
         dispatch,
+        status: 'progress',
       });
-      getTodoInProgress({
+      getTodos({
         uid: state.user.uid,
-        activeWorkSpaceId: state.activeWorkspace[0],
+        workSpaceId: state.activeWorkspace[0],
         dispatch,
+        status: 'completed',
       });
-      getTodoOverdue({
+      getTodos({
         uid: state.user.uid,
-        activeWorkSpaceId: state.activeWorkspace[0],
+        workSpaceId: state.activeWorkspace[0],
+        dispatch,
+        status: 'overdue',
+      });
+
+      getActivity({
+        uid: state.user.uid,
+        workSpaceId: state.activeWorkspace[0],
         dispatch,
       });
     }
-  }, [state.user.uid, state.activeWorkspace, state.isLoading]);
+  }, [state.user.uid, state.activeWorkspace]);
 
   return (
     <div className={sty.body}>
@@ -62,11 +68,11 @@ const Body = () => {
           </span>
           <ProgressBar
             percentage={`${
-              (state.todos.isCompleted?.length /
+              (state.todos.completed?.length /
                 (state.todos.pending?.length +
-                  state.todos.isCompleted?.length +
+                  state.todos.completed?.length +
                   state.todos.overdue?.length +
-                  state.todos.inProgress?.length)) *
+                  state.todos.progress?.length)) *
               100
             }%`}
           />
@@ -74,8 +80,8 @@ const Body = () => {
         <DndProvider backend={HTML5Backend}>
           <div className={sty.todoBody}>
             <TodoLists title="Pending" data={state.todos.pending} />
-            <TodoLists title="In Progress" data={state.todos.inProgress} />
-            <TodoLists title="Completed" data={state.todos.isCompleted} />
+            <TodoLists title="In Progress" data={state.todos.progress} />
+            <TodoLists title="Completed" data={state.todos.completed} />
             <TodoLists title="Overdue" data={state.todos.overdue} />
           </div>
         </DndProvider>

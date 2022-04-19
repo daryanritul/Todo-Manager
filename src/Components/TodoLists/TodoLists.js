@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useDrop } from 'react-dnd';
-import { addTodo } from '../../fireabse/todo';
+import { addTodo, updateStatus } from '../../fireabse/todo';
 import { userContext } from '../../UserContext/store';
 import Todo from '../Todo/Todo';
 
@@ -10,31 +10,38 @@ const TodoLists = ({ title, data }) => {
   const todos = data ? data : [];
   const { state, dispatch } = useContext(userContext);
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: ['overdue', 'pending', 'inProgress', 'isCompleted'],
-    drop: item => dropHandler(item),
-    collect: monitor => ({
+    accept: ['overdue', 'pending', 'progress', 'completed'],
+    drop: (item) => dropHandler(item),
+    collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   }));
-  const dropHandler = ({ todoTitle, id, description, dueDate, status }) => {
-    console.log({
+  const dropHandler = ({
+    todoTitle,
+    id,
+    description,
+    dueDate,
+    status,
+    workSpaceId,
+  }) => {
+    updateStatus({
       uid: state.user.uid,
+      id,
       title: todoTitle,
-      id: id,
-      description: description,
-      status:
+      newStatus:
         title === 'Pending'
           ? 'pending'
           : title === 'Completed'
-          ? 'isCompleted'
+          ? 'completed'
           : title === 'In Progress'
-          ? 'inProgress'
+          ? 'progress'
           : 'overdue',
-      dueDate: dueDate,
-      activeWorkSpaceId: state.activeWorkspace[0], //TODO: activeWorkspace
+      prevStatus: status,
+      workSpaceId, //TODO: activeWorkspace
       dispatch,
     });
   };
+
   return (
     <div className={sty.todoList}>
       <div className={sty.listHead}>
