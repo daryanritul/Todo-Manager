@@ -62,11 +62,11 @@ const Body = () => {
           </span>
           <ProgressBar
             percentage={`${
-              (state.todos.isCompleted?.data?.length /
-                (state.todos.pending?.data?.length +
-                  state.todos.isCompleted?.data?.length +
-                  state.todos.overdue?.data?.length +
-                  state.todos.inProgress?.data?.length)) *
+              (state.todos.isCompleted?.length /
+                (state.todos.pending?.length +
+                  state.todos.isCompleted?.length +
+                  state.todos.overdue?.length +
+                  state.todos.inProgress?.length)) *
               100
             }%`}
           />

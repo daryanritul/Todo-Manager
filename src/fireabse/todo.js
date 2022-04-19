@@ -87,7 +87,7 @@ export const getTodoPending = async ({ uid, activeWorkSpaceId, dispatch }) => {
     temptodos.push(doc.data());
   });
 
-  dispatch({ type: ADD_TODO_PENDING, payload: { data: temptodos } });
+  dispatch({ type: ADD_TODO_PENDING, payload: temptodos });
 };
 export const getTodoInProgress = async ({
   uid,
@@ -106,7 +106,7 @@ export const getTodoInProgress = async ({
     temptodos.push(doc.data());
   });
 
-  dispatch({ type: ADD_TODO_IN_PROGRESS, payload: { data: temptodos } });
+  dispatch({ type: ADD_TODO_IN_PROGRESS, payload: temptodos });
 };
 export const getTodoCompleted = async ({
   uid,
@@ -125,7 +125,7 @@ export const getTodoCompleted = async ({
     temptodos.push(doc.data());
   });
 
-  dispatch({ type: ADD_TODO_COMPLETED, payload: { data: temptodos } });
+  dispatch({ type: ADD_TODO_COMPLETED, payload: temptodos });
 };
 export const getTodoOverdue = async ({ uid, activeWorkSpaceId, dispatch }) => {
   const todos = query(
@@ -140,5 +140,5 @@ export const getTodoOverdue = async ({ uid, activeWorkSpaceId, dispatch }) => {
     temptodos.push(doc.data());
   });
 
-  dispatch({ type: ADD_TODO_OVERDUE, payload: { data: temptodos } });
+  dispatch({ type: ADD_TODO_OVERDUE, payload: temptodos });
 };

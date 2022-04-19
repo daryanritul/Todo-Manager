@@ -7,7 +7,7 @@ import Todo from '../Todo/Todo';
 import sty from './TodoLists.module.css';
 
 const TodoLists = ({ title, data }) => {
-  const todos = data ? data.data : [];
+  const todos = data ? data : [];
   const { state, dispatch } = useContext(userContext);
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ['overdue', 'pending', 'inProgress', 'isCompleted'],
@@ -17,28 +17,23 @@ const TodoLists = ({ title, data }) => {
     }),
   }));
   const dropHandler = ({ todoTitle, id, description, dueDate, status }) => {
-    console.log(status, '-> -> ', title);
-    if (title && id && description && dueDate) {
-      addTodo({
-        uid: state.user.uid,
-        title: todoTitle,
-        id: id,
-        description: description,
-        status:
-          title === 'Pending'
-            ? 'pending'
-            : title === 'Completed'
-            ? 'isCompleted'
-            : title === 'In Progress'
-            ? 'inProgress'
-            : 'overdue',
-        dueDate: dueDate,
-        activeWorkSpaceId: state.activeWorkspace[0],
-        dispatch,
-      });
-    } else {
-      console.log('Error');
-    }
+    console.log({
+      uid: state.user.uid,
+      title: todoTitle,
+      id: id,
+      description: description,
+      status:
+        title === 'Pending'
+          ? 'pending'
+          : title === 'Completed'
+          ? 'isCompleted'
+          : title === 'In Progress'
+          ? 'inProgress'
+          : 'overdue',
+      dueDate: dueDate,
+      activeWorkSpaceId: state.activeWorkspace[0], //TODO: activeWorkspace
+      dispatch,
+    });
   };
   return (
     <div className={sty.todoList}>

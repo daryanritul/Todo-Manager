@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: SET_IS_LOADING, payload: true });
-    const susbcriber = onAuthStateChanged(auth, (user) => {
+    const susbcriber = onAuthStateChanged(auth, user => {
       if (user) {
         dispatch({
           type: SET_USER,
