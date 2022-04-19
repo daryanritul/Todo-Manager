@@ -12,12 +12,14 @@ import {
   getTodoOverdue,
   getTodoCompleted,
 } from '../../fireabse/todo';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const Body = () => {
   const { state, dispatch } = useContext(userContext);
   const [toogleTodo, setToogleTodo] = useState(false);
 
-  const setToggle = (status) => {
+  const setToggle = status => {
     setToogleTodo(status);
   };
 
@@ -45,7 +47,7 @@ const Body = () => {
       });
     }
   }, [state.user.uid, state.activeWorkspace, state.isLoading]);
-  console.log('state.isLoading', state.isLoading);
+
   return (
     <div className={sty.body}>
       <div className={sty.todos}>
@@ -58,14 +60,25 @@ const Body = () => {
               add new todo
             </div>
           </span>
-          <ProgressBar percentage={'40%'} />
+          <ProgressBar
+            percentage={`${
+              (state.todos.isCompleted?.data?.length /
+                (state.todos.pending?.data?.length +
+                  state.todos.isCompleted?.data?.length +
+                  state.todos.overdue?.data?.length +
+                  state.todos.inProgress?.data?.length)) *
+              100
+            }%`}
+          />
         </div>
-        <div className={sty.todoBody}>
-          <TodoLists title="Pending" data={state.todos.pending} />
-          <TodoLists title="In Progress" data={state.todos.inProgress} />
-          <TodoLists title="Completed" data={state.todos.isCompleted} />
-          <TodoLists title="Overdue" data={state.todos.overdue} />
-        </div>
+        <DndProvider backend={HTML5Backend}>
+          <div className={sty.todoBody}>
+            <TodoLists title="Pending" data={state.todos.pending} />
+            <TodoLists title="In Progress" data={state.todos.inProgress} />
+            <TodoLists title="Completed" data={state.todos.isCompleted} />
+            <TodoLists title="Overdue" data={state.todos.overdue} />
+          </div>
+        </DndProvider>
       </div>
       <div className={sty.activity}>
         <Activity />

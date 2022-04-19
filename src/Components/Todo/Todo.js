@@ -5,30 +5,47 @@ import sty from './Todo.module.css';
 import Delete from '../../Assets/Delete.svg';
 import TodoModal from '../TodoModal/TodoModal';
 
+import { useDrag } from 'react-dnd';
+
 const Todo = ({ todo }) => {
   const [toogleTodo, setToogleTodo] = useState(false);
   var date = new Date(todo.dueDate);
   const dotColor =
     todo.status === 'pending'
       ? 'tomato'
-      : todo.status === 'inprogress'
+      : todo.status === 'inProgress'
       ? 'yellow'
-      : todo.status === 'completed'
+      : todo.status === 'isCompleted'
       ? 'green'
       : 'red';
 
-  const setToggle = (status) => {
+  const setToggle = status => {
     setToogleTodo(status);
   };
+
+  const [{ isDragging, otherProps }, drag, dragPreview] = useDrag(() => ({
+    type: `${todo.status}`,
+    item: {
+      todoTitle: todo.title,
+      id: todo.id,
+      description: todo.description,
+      dueDate: todo.dueDate,
+      status: todo.status,
+    },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
   return (
     <>
       {toogleTodo && <TodoModal todo={todo} setToggle={setToggle} />}
-
       <div
         className={sty.todo}
         onClick={() => {
           setToggle(true);
         }}
+        ref={drag}
       >
         <div className={sty.todoHead}>
           <p className={sty.title}>{todo.title}</p>
