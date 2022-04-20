@@ -9,6 +9,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore/lite';
+
 import {
   ADD_TODO_COMPLETED,
   ADD_TODO_OVERDUE,
@@ -73,6 +74,7 @@ export const addTodo = async (data) => {
     }).then(() => {
       dispatch({ type: SET_IS_LOADING, payload: false });
       getTodos({ uid, workSpaceId, dispatch, status });
+      getTodos({ uid, workSpaceId, dispatch, status: 'overdue' });
       addActivity({
         uid,
         workSpaceId,
@@ -113,11 +115,29 @@ export const updateStatus = async ({
 };
 
 export const getTodos = async ({ uid, workSpaceId, dispatch, status }) => {
-  const todos = query(
-    collection(db, 'users', uid, 'workspaces', workSpaceId, 'todos'),
-    where('status', '==', status),
-    orderBy('createdAt')
-  );
+  let todos = null;
+  if (status == 'overdue') {
+    todos = query(
+      collection(db, 'users', uid, 'workspaces', workSpaceId, 'todos'),
+      where('dueDate', '<', Timestamp.now().toMillis()),
+      orderBy('dueDate'),
+      orderBy('createdAt')
+    );
+  } else if (status == 'completed') {
+    todos = query(
+      collection(db, 'users', uid, 'workspaces', workSpaceId, 'todos'),
+      where('status', '==', 'completed'),
+      orderBy('createdAt')
+    );
+  } else {
+    todos = query(
+      collection(db, 'users', uid, 'workspaces', workSpaceId, 'todos'),
+      where('status', '==', status),
+      where('dueDate', '>', Timestamp.now().toMillis()),
+      orderBy('dueDate'),
+      orderBy('createdAt')
+    );
+  }
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];

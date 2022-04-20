@@ -7,7 +7,7 @@ const TodoModal = ({ todo, setToggle }) => {
   const { state, dispatch } = useContext(userContext);
   const [title, setTitle] = useState(todo ? todo.title : todo.title);
   const [description, setDescription] = useState(todo ? todo.description : '');
-  const [dueDate, setDueDate] = useState(todo ? todo.dueDate : false);
+  const [dueDate, setDueDate] = useState(todo ? todo.dueDate : '2030-12-1');
   const submitHandler = () => {
     addTodo({
       uid: state.user.uid,
@@ -15,7 +15,7 @@ const TodoModal = ({ todo, setToggle }) => {
       id: todo ? todo.id : null,
       description: description,
       status: todo ? todo.status : 'pending',
-      dueDate: dueDate ? dueDate : false,
+      dueDate: Date.parse(dueDate),
       workSpaceId: state.activeWorkspace[0],
       dispatch,
     });

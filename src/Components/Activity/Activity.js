@@ -27,7 +27,7 @@ const Activity = () => {
             </p>
             <div className={sty.actTime}>
               <p>{new Date(activity.actionDate * 1000).toLocaleTimeString()}</p>
-              <p>{new Date(activity.actionDate).toLocaleDateString()}</p>
+              <p>{activity.actionDate.toDate().toLocaleDateString()}</p>
             </div>
           </span>
         </div>
