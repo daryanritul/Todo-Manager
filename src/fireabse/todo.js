@@ -1,6 +1,7 @@
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
   orderBy,
@@ -20,7 +21,7 @@ import {
 import { addActivity } from './activity';
 import { db } from './config';
 
-export const addTodo = async data => {
+export const addTodo = async (data) => {
   const {
     uid,
     workSpaceId,
@@ -47,6 +48,8 @@ export const addTodo = async data => {
       }
     ).then(() => {
       getTodos({ uid, workSpaceId, dispatch, status: 'pending' });
+      getTodos({ uid, workSpaceId, dispatch, status: 'overdue' });
+
       dispatch({ type: SET_IS_LOADING, payload: false });
       addActivity({
         uid,
@@ -95,23 +98,33 @@ export const updateStatus = async ({
   prevStatus,
   title,
 }) => {
-  const todoRef = doc(db, 'users', uid, 'workspaces', workSpaceId, 'todos', id);
-  updateDoc(todoRef, {
-    status: newStatus,
-    createdAt: Timestamp.now(),
-  }).then(() => {
-    dispatch({ type: SET_IS_LOADING, payload: false });
-    getTodos({ uid, workSpaceId, dispatch, status: newStatus });
-    getTodos({ uid, workSpaceId, dispatch, status: prevStatus });
-  });
-
-  addActivity({
-    uid,
-    workSpaceId,
-    title,
-    messsage: `Move to ${newStatus}`,
-    dispatch,
-  });
+  if (newStatus !== prevStatus) {
+    dispatch({ type: SET_IS_LOADING, payload: true });
+    const todoRef = doc(
+      db,
+      'users',
+      uid,
+      'workspaces',
+      workSpaceId,
+      'todos',
+      id
+    );
+    updateDoc(todoRef, {
+      status: newStatus,
+      createdAt: Timestamp.now(),
+    }).then(() => {
+      dispatch({ type: SET_IS_LOADING, payload: false });
+      getTodos({ uid, workSpaceId, dispatch, status: newStatus });
+      getTodos({ uid, workSpaceId, dispatch, status: prevStatus });
+      addActivity({
+        uid,
+        workSpaceId,
+        title,
+        messsage: `Move to ${newStatus}`,
+        dispatch,
+      });
+    });
+  }
 };
 
 export const getTodos = async ({ uid, workSpaceId, dispatch, status }) => {
@@ -141,7 +154,7 @@ export const getTodos = async ({ uid, workSpaceId, dispatch, status }) => {
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];
-  querySnapshot.forEach(doc => {
+  querySnapshot.forEach((doc) => {
     temptodos.push({ ...doc.data(), id: doc.id });
   });
 
@@ -165,4 +178,28 @@ export const getTodos = async ({ uid, workSpaceId, dispatch, status }) => {
     default:
       break;
   }
+};
+
+export const deleteTodo = async ({
+  uid,
+  workSpaceId,
+  id,
+  dispatch,
+  status,
+  title,
+}) => {
+  dispatch({ type: SET_IS_LOADING, payload: true });
+  const todoRef = doc(db, 'users', uid, 'workspaces', workSpaceId, 'todos', id);
+  deleteDoc(todoRef).then(() => {
+    dispatch({ type: SET_IS_LOADING, payload: false });
+    getTodos({ uid, workSpaceId, dispatch, status });
+    getTodos({ uid, workSpaceId, dispatch, status: 'overdue' });
+    addActivity({
+      uid,
+      workSpaceId,
+      title,
+      messsage: `Deleted`,
+      dispatch,
+    });
+  });
 };

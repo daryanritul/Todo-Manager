@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import sty from './Todo.module.css';
 
@@ -6,8 +6,11 @@ import Delete from '../../Assets/Delete.svg';
 import TodoModal from '../TodoModal/TodoModal';
 
 import { useDrag } from 'react-dnd';
+import { deleteTodo } from '../../fireabse/todo';
+import { userContext } from '../../UserContext/store';
 
 const Todo = ({ todo }) => {
+  const { state, dispatch } = useContext(userContext);
   const [toogleTodo, setToogleTodo] = useState(false);
   var date = new Date(todo.dueDate);
   const dotColor =
@@ -19,7 +22,7 @@ const Todo = ({ todo }) => {
       ? 'green'
       : 'red';
 
-  const setToggle = status => {
+  const setToggle = (status) => {
     setToogleTodo(status);
   };
 
@@ -33,14 +36,22 @@ const Todo = ({ todo }) => {
       status: todo.status,
       workSpaceId: todo.workSpaceId,
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
 
-  const deleteTodoHandler = e => {
+  const deleteTodoHandler = (e) => {
     e.stopPropagation();
     console.log('Delete this ID : ', todo.id);
+    deleteTodo({
+      uid: state.user.uid,
+      workSpaceId: todo.workSpaceId,
+      id: todo.id,
+      dispatch,
+      status: todo.status,
+      title: todo.title,
+    });
   };
 
   return (
@@ -57,7 +68,7 @@ const Todo = ({ todo }) => {
           <p className={sty.title}>{todo.title}</p>
           <div
             className={sty.icons}
-            onClick={event => deleteTodoHandler(event)}
+            onClick={(event) => deleteTodoHandler(event)}
           >
             <img src={Delete} />
           </div>
