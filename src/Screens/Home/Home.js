@@ -17,8 +17,6 @@ const Home = () => {
     }
   }, [state.user.uid]);
 
-  console.log('worsk', state.workspace);
-
   return (
     <div className={s.home}>
       <div className={s.head}>

@@ -15,7 +15,7 @@ export const addWorkspace = async (title, uid, dispatch) => {
 
   await setDoc(newWorkSpaceRef, {
     title,
-    timeStamp: Timestamp.now(),
+    createdAt: Timestamp.now(),
   }).then(() => {
     dispatch({ type: UPDATE_WORKSPACE, payload: [newWorkSpaceRef.id, title] });
     console.log('DDDD', [newWorkSpaceRef.id, title]);
@@ -25,7 +25,7 @@ export const addWorkspace = async (title, uid, dispatch) => {
 export const getWorkspace = async (uid, dispatch) => {
   const workspaces = query(
     collection(db, 'users', uid, 'workspaces'),
-    orderBy('timeStamp')
+    orderBy('createdAt')
   );
 
   const querySnapshot = await getDocs(workspaces);

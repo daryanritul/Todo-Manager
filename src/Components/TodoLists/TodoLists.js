@@ -1,39 +1,61 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { useDrop } from 'react-dnd';
+import { addTodo, updateStatus } from '../../fireabse/todo';
+import { userContext } from '../../UserContext/store';
 import Todo from '../Todo/Todo';
 
 import sty from './TodoLists.module.css';
 
-const TodoLists = ({ title }) => {
-  const dummyTodo = [
-    {
-      title: 'Create Wireframe',
-      uid: '1',
-      description:
-        'Ipsum amet consectetur occaecat ad consectetur consectetur et ad nulla',
-      status: 'pending',
-      createdAt: Date.now(),
-      dueDate: '2022-01-01',
-    },
-    {
-      title: 'Create Wireframe',
-      description: '',
-      uid: '2',
-      status: 'overdue',
-      createdAt: Date.now(),
-      dueDate: '2022-04-06',
-    },
-  ];
+const TodoLists = ({ title, data, dnd }) => {
+  const todos = data ? data : [];
+  const { state, dispatch } = useContext(userContext);
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: ['pending', 'progress', 'completed'],
+    drop: item => dropHandler(item),
+    collect: monitor => ({
+      isOver: monitor.isOver(),
+    }),
+  }));
+  const dropHandler = ({
+    todoTitle,
+    id,
+    description,
+    dueDate,
+    status,
+    workSpaceId,
+  }) => {
+    updateStatus({
+      uid: state.user.uid,
+      id,
+      title: todoTitle,
+      newStatus:
+        title === 'Pending'
+          ? 'pending'
+          : title === 'Completed'
+          ? 'completed'
+          : title === 'In Progress'
+          ? 'progress'
+          : 'overdue',
+      prevStatus: status,
+      workSpaceId, //TODO: activeWorkspace
+      dispatch,
+    });
+  };
+
   return (
     <div className={sty.todoList}>
       <div className={sty.listHead}>
         <div className={sty.title}>{title}</div>
-        <div className={sty.title}>10</div>
+        <div className={sty.title}>{todos ? todos.length : 0}</div>
       </div>
-      <div className={sty.listBody}>
-        {dummyTodo.map((todo, index) => (
-          <Todo key={index} todo={todo} />
-        ))}
-      </div>
+      {todos && (
+        <div className={sty.listBody} ref={dnd ? drop : null}>
+          {todos.map((todo, index) => (
+            <Todo key={index} todo={todo} />
+          ))}
+          {isOver && dnd && <div className={sty.todoSkleton}></div>}
+        </div>
+      )}
     </div>
   );
 };
