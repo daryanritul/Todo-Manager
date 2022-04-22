@@ -19,12 +19,12 @@ const Todo = ({ todo }) => {
       ? 'green'
       : 'red';
 
-  const setToggle = (status) => {
+  const setToggle = status => {
     setToogleTodo(status);
   };
 
-  const [{ isDragging, otherProps }, drag, dragPreview] = useDrag(() => ({
-    type: `${todo.status}`,
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: `${todo.status === 'overdue' ? '' : todo.status}`,
     item: {
       todoTitle: todo.title,
       id: todo.id,
@@ -33,10 +33,15 @@ const Todo = ({ todo }) => {
       status: todo.status,
       workSpaceId: todo.workSpaceId,
     },
-    collect: (monitor) => ({
+    collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
+
+  const deleteTodoHandler = e => {
+    e.stopPropagation();
+    console.log('Delete this ID : ', todo.id);
+  };
 
   return (
     <>
@@ -50,7 +55,10 @@ const Todo = ({ todo }) => {
       >
         <div className={sty.todoHead}>
           <p className={sty.title}>{todo.title}</p>
-          <div className={sty.icons}>
+          <div
+            className={sty.icons}
+            onClick={event => deleteTodoHandler(event)}
+          >
             <img src={Delete} />
           </div>
         </div>

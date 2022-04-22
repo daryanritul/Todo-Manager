@@ -15,7 +15,7 @@ const Body = () => {
   const { state, dispatch } = useContext(userContext);
   const [toogleTodo, setToogleTodo] = useState(false);
 
-  const setToggle = (status) => {
+  const setToggle = status => {
     setToogleTodo(status);
   };
 
@@ -79,9 +79,9 @@ const Body = () => {
         </div>
         <DndProvider backend={HTML5Backend}>
           <div className={sty.todoBody}>
-            <TodoLists title="Pending" data={state.todos.pending} />
-            <TodoLists title="In Progress" data={state.todos.progress} />
-            <TodoLists title="Completed" data={state.todos.completed} />
+            <TodoLists title="Pending" data={state.todos.pending} dnd />
+            <TodoLists title="In Progress" data={state.todos.progress} dnd />
+            <TodoLists title="Completed" data={state.todos.completed} dnd />
             <TodoLists title="Overdue" data={state.todos.overdue} />
           </div>
         </DndProvider>

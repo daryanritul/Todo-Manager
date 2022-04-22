@@ -6,13 +6,13 @@ import Todo from '../Todo/Todo';
 
 import sty from './TodoLists.module.css';
 
-const TodoLists = ({ title, data }) => {
+const TodoLists = ({ title, data, dnd }) => {
   const todos = data ? data : [];
   const { state, dispatch } = useContext(userContext);
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: ['overdue', 'pending', 'progress', 'completed'],
-    drop: (item) => dropHandler(item),
-    collect: (monitor) => ({
+    accept: ['pending', 'progress', 'completed'],
+    drop: item => dropHandler(item),
+    collect: monitor => ({
       isOver: monitor.isOver(),
     }),
   }));
@@ -49,11 +49,11 @@ const TodoLists = ({ title, data }) => {
         <div className={sty.title}>{todos ? todos.length : 0}</div>
       </div>
       {todos && (
-        <div className={sty.listBody} ref={drop}>
+        <div className={sty.listBody} ref={dnd ? drop : null}>
           {todos.map((todo, index) => (
             <Todo key={index} todo={todo} />
           ))}
-          {isOver && <div className={sty.todoSkleton}></div>}
+          {isOver && dnd && <div className={sty.todoSkleton}></div>}
         </div>
       )}
     </div>

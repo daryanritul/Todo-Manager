@@ -20,7 +20,7 @@ import {
 import { addActivity } from './activity';
 import { db } from './config';
 
-export const addTodo = async (data) => {
+export const addTodo = async data => {
   const {
     uid,
     workSpaceId,
@@ -141,7 +141,7 @@ export const getTodos = async ({ uid, workSpaceId, dispatch, status }) => {
 
   const querySnapshot = await getDocs(todos);
   const temptodos = [];
-  querySnapshot.forEach((doc) => {
+  querySnapshot.forEach(doc => {
     temptodos.push({ ...doc.data(), id: doc.id });
   });
 
