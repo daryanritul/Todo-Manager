@@ -9,7 +9,7 @@ import Delete from '../../Assets/Delete.svg';
 const Sidebar = () => {
   const { state, dispatch } = useContext(userContext);
   const [cnfDelete, setCnfDelete] = useState(false);
-  const [selectedItem, setSelectedItem] = useState('My ToDos'); //defaul selected Item is Always ONE
+  const [selectedItem, setSelectedItem] = useState('My ToDos');
   const [item, setItem] = useState({
     value: '',
     status: false,
