@@ -2,7 +2,7 @@ import React from 'react';
 
 import sty from './ProgressBar.module.css';
 
-const ProgressBar = ({ percentage }) => {
+const ProgressBar = React.memo(({ percentage }) => {
   return (
     <div className={sty.bar}>
       <p>0%</p>
@@ -17,6 +17,6 @@ const ProgressBar = ({ percentage }) => {
       <p>100%</p>
     </div>
   );
-};
+});
 
 export default ProgressBar;

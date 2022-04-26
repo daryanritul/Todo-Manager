@@ -6,7 +6,7 @@ import Delete from '../../Assets/Delete.svg';
 import TodoModal from '../TodoModal/TodoModal';
 
 import { useDrag } from 'react-dnd';
-import { deleteTodo } from '../../fireabse/todo';
+import { deleteTodo, markeCompleted } from '../../fireabse/todo';
 import { userContext } from '../../UserContext/store';
 
 const Todo = ({ todo }) => {
@@ -53,6 +53,18 @@ const Todo = ({ todo }) => {
       title: todo.title,
     });
   };
+  const completedTodoHandler = (e) => {
+    e.stopPropagation();
+    console.log('Delete this ID : ', todo.id);
+    markeCompleted({
+      uid: state.user.uid,
+      workSpaceId: todo.workSpaceId,
+      id: todo.id,
+      dispatch,
+      prevStatus: todo.status,
+      title: todo.title,
+    });
+  };
 
   return (
     <>
@@ -92,6 +104,9 @@ const Todo = ({ todo }) => {
               '/' +
               date.getFullYear()}
           </div>
+          {todo.status === 'completed' ? null : (
+            <button onClick={completedTodoHandler}>Completed</button>
+          )}
         </div>
       </div>
     </>

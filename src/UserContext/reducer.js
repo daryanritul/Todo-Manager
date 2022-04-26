@@ -11,6 +11,7 @@ import {
   ADD_TODO_PROGRESS,
   SET_IS_SIGNEDIN,
   SET_ACTIVITY,
+  ADD_ALL_TODO,
 } from './actions.type';
 
 export default (state, action) => {
@@ -29,6 +30,10 @@ export default (state, action) => {
       return { ...state, activeWorkspace: action.payload };
     case SET_ACTIVITY:
       return { ...state, activity: action.payload };
+
+    case ADD_ALL_TODO:
+      return { ...state, todos: action.payload };
+
     case ADD_TODO_PENDING:
       return { ...state, todos: { ...state.todos, pending: action.payload } };
     case ADD_TODO_PROGRESS:

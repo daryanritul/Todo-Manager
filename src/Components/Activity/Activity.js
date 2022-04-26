@@ -3,14 +3,6 @@ import { userContext } from '../../UserContext/store';
 
 import sty from './Activity.module.css';
 
-const dummyActtivity = [
-  {
-    title: 'Hooks',
-    messsage: 'created',
-    actionDate: Date.now(),
-  },
-];
-
 const Activity = () => {
   const { state } = useContext(userContext);
   const { activity } = state;

@@ -6,7 +6,7 @@ import TodoModal from '../TodoModal/TodoModal';
 import { userContext } from '../../UserContext/store';
 
 import sty from './Body.module.css';
-import { getTodos } from '../../fireabse/todo';
+import { getAllTodos, getTodos } from '../../fireabse/todo';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { getActivity } from '../../fireabse/activity';
@@ -15,38 +15,13 @@ const Body = () => {
   const { state, dispatch } = useContext(userContext);
   const [toogleTodo, setToogleTodo] = useState(false);
 
-  const setToggle = status => {
+  const setToggle = (status) => {
     setToogleTodo(status);
   };
 
   useEffect(() => {
     if (state.user.uid && state.activeWorkspace) {
-      getTodos({
-        uid: state.user.uid,
-        workSpaceId: state.activeWorkspace[0],
-        dispatch,
-        status: 'pending',
-      });
-      getTodos({
-        uid: state.user.uid,
-        workSpaceId: state.activeWorkspace[0],
-        dispatch,
-        status: 'progress',
-      });
-      getTodos({
-        uid: state.user.uid,
-        workSpaceId: state.activeWorkspace[0],
-        dispatch,
-        status: 'completed',
-      });
-      getTodos({
-        uid: state.user.uid,
-        workSpaceId: state.activeWorkspace[0],
-        dispatch,
-        status: 'overdue',
-      });
-
-      getActivity({
+      getAllTodos({
         uid: state.user.uid,
         workSpaceId: state.activeWorkspace[0],
         dispatch,
