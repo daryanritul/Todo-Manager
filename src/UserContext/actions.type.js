@@ -10,3 +10,4 @@ export const ADD_TODO_OVERDUE = 'ADD_TODO_OVERDUE';
 export const SET_IS_SIGNEDIN = 'IS_SIGNED_IN';
 export const SET_IS_LOADING = 'IS_LOADING';
 export const SET_SIGN_OUT = 'SIGN_OUT';
+export const ADD_ALL_TODO = 'ADD_ALL_TODO';

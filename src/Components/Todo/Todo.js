@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import sty from './Todo.module.css';
 
 import Delete from '../../Assets/Delete.svg';
+import Checkmark from '../../Assets/Checkmark.svg';
 import TodoModal from '../TodoModal/TodoModal';
 
 import { useDrag } from 'react-dnd';
@@ -22,7 +23,7 @@ const Todo = ({ todo }) => {
       ? 'green'
       : 'red';
 
-  const setToggle = (status) => {
+  const setToggle = status => {
     setToogleTodo(status);
   };
 
@@ -36,12 +37,12 @@ const Todo = ({ todo }) => {
       status: todo.status,
       workSpaceId: todo.workSpaceId,
     },
-    collect: (monitor) => ({
+    collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
 
-  const deleteTodoHandler = (e) => {
+  const deleteTodoHandler = e => {
     e.stopPropagation();
     console.log('Delete this ID : ', todo.id);
     deleteTodo({
@@ -53,7 +54,7 @@ const Todo = ({ todo }) => {
       title: todo.title,
     });
   };
-  const completedTodoHandler = (e) => {
+  const completedTodoHandler = e => {
     e.stopPropagation();
     console.log('Delete this ID : ', todo.id);
     markeCompleted({
@@ -78,11 +79,21 @@ const Todo = ({ todo }) => {
       >
         <div className={sty.todoHead}>
           <p className={sty.title}>{todo.title}</p>
-          <div
-            className={sty.icons}
-            onClick={(event) => deleteTodoHandler(event)}
-          >
-            <img src={Delete} />
+          <div className={sty.iconBox}>
+            {todo.status === 'completed' ? null : (
+              <div
+                onClick={completedTodoHandler}
+                className={`${sty.done} ${sty.icons}`}
+              >
+                <img src={Checkmark} />
+              </div>
+            )}
+            <div
+              className={sty.icons}
+              onClick={event => deleteTodoHandler(event)}
+            >
+              <img src={Delete} />
+            </div>
           </div>
         </div>
         <p className={sty.desc}>{todo.description}</p>
@@ -104,9 +115,6 @@ const Todo = ({ todo }) => {
               '/' +
               date.getFullYear()}
           </div>
-          {todo.status === 'completed' ? null : (
-            <button onClick={completedTodoHandler}>Completed</button>
-          )}
         </div>
       </div>
     </>
